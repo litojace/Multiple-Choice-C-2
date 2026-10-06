@@ -3,7 +3,7 @@
 const coding={
  id:'swap-values',title:'Swap values without creating pointers',source:'ch2 sample coding question.pdf',
  signature:'void DoublyList::swapFirstCallingSecondParam(DoublyList& paramlist)',
- prompt:'Write only the function body. Swap the value in the calling list’s first node with the value in the parameter list’s second node. If either list has fewer than two nodes, do nothing. Do not create any pointers. Node data is int; the class has first, last, and count members, plus getData(), setData(), and getNext() methods.',
+ prompt:'Write the missing function body. Swap two DATA VALUES: the first value in this list (the object calling the function) and the second value in paramlist.\n\nRules: If either list has fewer than two nodes, do nothing. Create no pointer variables and change no links. Node data is int. The class has first, last, and count members. Nodes provide getData(), setData(), and getNext().',
  solution:`if (count > 1 && paramlist.count > 1)
 {
     int temp = first->getData();
@@ -35,7 +35,7 @@ const steps=[
  {text:'Line 9: move the parameter list’s last pointer to Node1.',code:'paramlist.last = current;'}
 ];
 const pseudocode={id:'swap-nodes',title:'Complete a swap of two nodes',source:'ch2 sample pseudocode question.pdf',
- prompt:'Complete swapFirstCallingLastParameter: exchange the calling list’s first NODE with the parameter list’s last NODE by rearranging links. Do not swap data. The example uses two distinct lists with at least three nodes each. Node numbers below identify the original nodes by their data values.',
+ prompt:'Choose the two missing statements to swap whole NODES: the first node of this list and the last node of paramlist. Rearrange links; do not swap data values.\n\nAssume two separate lists, each with at least three nodes. Node numbers identify the original nodes by their values. Follow the lines in order and track each changed link.',
  signature:'void DoublyList::swapFirstCallingLastParameter(DoublyList& paramlist)',
  lines:steps.slice(1).map((s,i)=>i===2||i===6?`Line ${i+1}: [choose the missing statement]`:s.text),
  blanks:[
