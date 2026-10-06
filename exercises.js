@@ -3,7 +3,7 @@
 const coding={
  id:'swap-values',title:'Swap values without creating pointers',source:'Coding practice',
  signature:'void DoublyList::swapFirstCallingSecondParam(DoublyList& paramlist)',
- prompt:'Write the missing function body. Swap two DATA VALUES: the first value in this list (the object calling the function) and the second value in paramlist.\n\nRules: If either list has fewer than two nodes, do nothing. Create no pointer variables and change no links. Node data is int. The class has first, last, and count members. Nodes provide getData(), setData(), and getNext().',
+ prompt:'Write the missing function body. Swap two DATA VALUES: the first value in this list (the object calling the function) and the second value in paramlist.\n\nRules: If either list has fewer than two nodes, do nothing. Create no pointer variables and change no links. Node data is int. The class has `first`, `last`, and `count` members. Nodes provide getData(), setData(), and getNext().',
  solution:`if (count > 1 && paramlist.count > 1)
 {
     int temp = first->getData();
@@ -16,7 +16,7 @@ const coding={
  'I save the calling list’s first value in an int before overwriting it.',
  'I read the parameter list’s SECOND node, using first->getNext().',
  'I write the saved value into the parameter list’s second node.',
- 'I create no pointer variables and change no next or prev links.',
+ 'I create no pointer variables and change no `next` or `prev` links.',
  'I use braces, consistent indentation, a descriptive parameter name, and spaces around logical/comparison/assignment operators.'
  ],
  note:'Keep all links, node identities, and list counts unchanged. This operation swaps data values only.',
@@ -25,22 +25,22 @@ const coding={
 const steps=[
  {text:'Start: two distinct lists; both contain at least three nodes.',code:'// Calling: 1 2 3 4 5; parameter: 6 7 8 9'},
  {text:'Line 1: save the calling list’s first node in current.',code:'Node* current = first;'},
- {text:'Line 2: set Node2’s prev to Node9.',code:'current->getNext()->setPrev(paramlist.last);'},
- {text:'Line 3: set Node8’s next to Node1.',code:'paramlist.last->getPrev()->setNext(current);'},
- {text:'Line 4: set Node1’s prev to Node8.',code:'current->setPrev(paramlist.last->getPrev());'},
- {text:'Line 5: set Node9’s next to Node2.',code:'paramlist.last->setNext(current->getNext());'},
- {text:'Line 6: set Node1’s next to nullptr.',code:'current->setNext(nullptr);'},
- {text:'Line 7: set Node9’s prev to nullptr.',code:'paramlist.last->setPrev(nullptr);'},
- {text:'Line 8: move the calling list’s first pointer to Node9.',code:'first = paramlist.last;'},
- {text:'Line 9: move the parameter list’s last pointer to Node1.',code:'paramlist.last = current;'}
+ {text:'Line 2: set Node2’s `prev` to Node9.',code:'current->getNext()->setPrev(paramlist.last);'},
+ {text:'Line 3: set Node8’s `next` to Node1.',code:'paramlist.last->getPrev()->setNext(current);'},
+ {text:'Line 4: set Node1’s `prev` to Node8.',code:'current->setPrev(paramlist.last->getPrev());'},
+ {text:'Line 5: set Node9’s `next` to Node2.',code:'paramlist.last->setNext(current->getNext());'},
+ {text:'Line 6: set Node1’s `next` to nullptr.',code:'current->setNext(nullptr);'},
+ {text:'Line 7: set Node9’s `prev` to nullptr.',code:'paramlist.last->setPrev(nullptr);'},
+ {text:'Line 8: move the calling list’s `first` pointer to Node9.',code:'first = paramlist.last;'},
+ {text:'Line 9: move the parameter list’s `last` pointer to Node1.',code:'paramlist.last = current;'}
 ];
 const pseudocode={id:'swap-nodes',title:'Complete a swap of two nodes',source:'Coding practice',
  prompt:'Choose the two missing statements to swap whole NODES: the first node of this list and the last node of paramlist. Rearrange links; do not swap data values.\n\nAssume two separate lists, each with at least three nodes. Node numbers identify the original nodes by their values. Follow the lines in order and track each changed link.',
  signature:'void DoublyList::swapFirstCallingLastParameter(DoublyList& paramlist)',
  lines:steps.slice(1).map((s,i)=>i===2||i===6?`Line ${i+1}: [choose the missing statement]`:s.text),
  blanks:[
- {line:3,answer:1,options:['current->getNext()->setPrev(paramlist.last);','paramlist.last->getPrev()->setNext(current);','current->getPrev()->setNext(paramlist.last);','paramlist.last->getNext()->setPrev(current);'],explanation:'paramlist.last still points to Node9. Its existing prev reaches Node8; set Node8’s next to current (Node1). The first option repeats line 2, while the last two try to follow null links at this stage.'},
- {line:7,answer:2,options:['current->setPrev(nullptr);','paramlist.last->setNext(nullptr);','paramlist.last->setPrev(nullptr);','paramlist.last->getPrev()->setPrev(nullptr);'],explanation:'Node9 will become the calling list’s first node, so its prev must be nullptr. Do this after line 3, which needs Node9’s old prev to find Node8. Node1 already received its new prev in line 4.'}
+ {line:3,answer:1,options:['current->getNext()->setPrev(paramlist.last);','paramlist.last->getPrev()->setNext(current);','current->getPrev()->setNext(paramlist.last);','paramlist.last->getNext()->setPrev(current);'],explanation:'paramlist.last still points to Node9. Its existing `prev` reaches Node8; set Node8’s `next` to current (Node1). The first option repeats line 2, while the last two try to follow null links at this stage.'},
+ {line:7,answer:2,options:['current->setPrev(nullptr);','paramlist.last->setNext(nullptr);','paramlist.last->setPrev(nullptr);','paramlist.last->getPrev()->setPrev(nullptr);'],explanation:'Node9 will become the calling list’s first node, so its `prev` must be nullptr. Do this after line 3, which needs Node9’s old `prev` to find Node8. Node1 already received its new `prev` in line 4.'}
  ],
  note:'The intermediate pointer states temporarily break list invariants. Follow the specified order and avoid traversing the whole list until repairs are complete. At the end, first->prev and last->next are nullptr in both lists; counts and all node data are unchanged.'
 };

@@ -17,7 +17,7 @@ last = p4;
 p1->setNext(p4);
 p1 = p2;
 p3->getPrev()->setPrev(p1);`;
-const traceExplanation = 'Name the allocated nodes A(8), B(6 → changed to 5), C(7), and D(2). first stays at B. p4 stays at C and last becomes p4. p2 becomes nullptr and p1 is later assigned p2. p3 is reassigned to first->next, which is D. Changing a node’s links does not move pointers that already refer to it. The code is a tracing exercise, not a correct list-building algorithm.';
+const traceExplanation = 'Name the allocated nodes A(8), B(6 → changed to 5), C(7), and D(2). `first` stays at B. p4 stays at C and `last` becomes p4. p2 becomes nullptr and p1 is later assigned p2. p3 is reassigned to first->next, which is D. Changing a node’s links does not move pointers that already refer to it. The code is a tracing exercise, not a correct list-building algorithm.';
 const passPrompts = {
   "pass-vector": "A function must change the caller’s vector<int>.\nWhich parameter declaration lets those changes affect the original vector?",
   "pass-object": "A function reads three values from a DArray object. It must leave the object unchanged and avoid copying it.\nWhich parameter declaration best fits?",
@@ -34,12 +34,12 @@ add('dll-1','2','1','Linked lists',
 ['void DoublyList::replaceValue();','void replaceValue();','void replaceValue() const;','void DoublyList::replaceValue() const;'],1,
 'Inside the class, write the unqualified member name. The operation changes the list’s logical state, so the intended interface is non-const. Use DoublyList:: when defining the function outside the class. Note that const on a class containing raw pointers does not automatically make the pointed-to nodes const.', '',true,['Member function','Class qualifier','const modifier on a member function']);
 add('dll-2','2','2','Linked lists',
-'Add a new node to the END of the list. It should copy the first node’s data. Which code does this correctly?\n\nAssume at least two nodes. first and last point to the ends. Node(data, prev, next) creates a node. The count is updated separately.',
+'Add a new node to the END of the list. It should copy the first node’s data. Which code does this correctly?\n\nAssume at least two nodes. `first` and `last` point to the ends. Node(data, prev, next) creates a node. The count is updated separately.',
 ['last = last->getNext();\nlast->setNext(new Node(first->getData(), last, nullptr));',
 'last->setNext(new Node(first->getData(), last, nullptr));\nlast = last->getNext();',
 'last->setNext(new Node(first->getNext()->getData(), last, nullptr));\nlast = last->getNext();',
 'last->getNext()->setNext(new Node(first->getData(), last, nullptr));\nlast = last->getNext();'],1,
-'Create the new node with its prev pointing to the old tail and its next set to nullptr. Link the old tail to it, then move last to the new node. Moving last first would make it nullptr. Using first->getNext()->getData() copies the second node’s data.', '',true,['Node','Pointer','new operator']);
+'Create the new node with its prev pointing to the old tail and its next set to nullptr. Link the old tail to it, then move `last` to the new node. Moving `last` first would make it nullptr. Using first->getNext()->getData() copies the second node’s data.', '',true,['Node','Pointer','new operator']);
 add('dll-3','2','3','Linked lists',
 'The code runs inside a DoublyList member function.\nAfter paramList.first = first;, which pointer changes, and what does it point to?',
 ['Copies the first node’s data into the parameter list’s first node.','Makes the calling object’s first pointer point to the parameter list’s first node.','Makes the parameter object’s first pointer point to the calling object’s first node.','Creates a deep copy of the calling object’s list.'],2,
@@ -51,7 +51,7 @@ for(const [suffix,label,answer] of [['first','first',1],['last','last',2],['p1',
  ['nullptr','The node storing 5','The node storing 7','The node storing 2','The node storing 8'],answer,traceExplanation,traceCode,false,['Pointer','Node']);
 }
 add('dll-5','2','5','Linked lists',
-'Start with node 1 ⇄ node 2 ⇄ node 3.\nfirst points to node 1, p to node 2, and q to node 3.\nWhich code segments make the list circular in BOTH directions? Test each segment separately, starting with the original list.',
+'Start with node 1 ⇄ node 2 ⇄ node 3.\n`first` points to node 1, p to node 2, and q to node 3.\nWhich code segments make the list circular in BOTH directions? Test each segment separately, starting with the original list.',
 ['1 and 3 only','2 and 3 only','1 only','1, 2, and 3','3 only','1 and 2 only','2 only'],1,
 'Segment 2 sets node 1’s prev to node 3 and node 3’s next to node 1. Segment 3 does the same using p->getNext() to reach node 3. Segment 1 sets node 3’s next correctly, but then moves q to node 1 and incorrectly makes node 1’s prev point to itself.',
 '1. q->setNext(first);\n   q = q->getNext();\n   first->setPrev(q);\n\n2. p->getPrev()->setPrev(q);\n   q->setNext(p->getPrev());\n\n3. first->setPrev(p->getNext());\n   p->getNext()->setNext(first);',false,['Doubly linked list','Pointer']);
@@ -76,7 +76,7 @@ add('dll-8','2','8','Linked lists',
 add('array-1','3–4','1','DArray',
 'a points to an array created with new int[n].\nWhat does delete[] a; release when the destructor runs?',
 ['Deletes the pointer variable itself.','Releases the dynamically allocated array that a points to.','Deletes both the array and the pointer variable.','Sets a to nullptr without releasing the array.'],1,
-'delete[] matches an allocation with new[]. It releases the array storage; it does not delete the pointer variable or set it to nullptr. The pointer value is dangling afterward unless overwritten.',
+'delete[] matches an allocation with new[]. It releases the array storage; it does not delete the pointer variable or set it to `nullptr`. The pointer value is dangling afterward unless overwritten.',
 'DArray::~DArray()\n{\n    delete[] a;\n}',false,['Destructor','Dynamic array','Pointer']);
 add('array-2','3–4','2','DArray',
 'Copy the LAST value from otherArray into this object’s FIRST element.\nWhich statement belongs inside overwrite()?\n\nBoth arrays have at least one element. Their lengths may differ.',
@@ -113,7 +113,7 @@ add('template-7','3–4','7','Templates',
 // Strategy hints are optional and do not identify the correct option.
 const strategyHints = {
   "dll-1": "Check where the declaration is written and whether the function changes the list.",
-  "dll-2": "Follow the lines in order. Check what last points to before using it again.",
+  "dll-2": "Follow the lines in order. Check what `last` points to before using it again.",
   "dll-3": "Find the value on the right side, then the variable receiving it on the left.",
   "dll-5": "Check both links between the first and last nodes. Track changes to q as well as changes to links.",
   "dll-6": "Identify the source and destination nodes before following the method calls.",
