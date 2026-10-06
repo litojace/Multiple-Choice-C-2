@@ -8,5 +8,14 @@ function updateLectureNotes(){
  const topic=$('lecture-topic').value,query=$('lecture-search').value.trim().toLowerCase();
  const list=LectureStudio.lessons.filter(l=>(topic==='all'||l.topic===topic)&&[l.title,l.summary,...l.steps,l.code,l.note].join(' ').toLowerCase().includes(query));
  $('lecture-count').textContent=`${list.length} lessons`;
- $('lecture-list').innerHTML=list.length?list.map(l=>`<details class="library-term lecture-lesson"><summary>${escape(l.title)}<span class="pill">${escape(l.topic)}</span></summary><div class="library-body"><p class="definition">${formatProse(l.summary)}</p><pre class="example">${escape(l.code)}</pre><ol class="lecture-steps">${l.steps.map(s=>`<li>${formatProse(s)}</li>`).join('')}</ol><p class="lab-notice">${formatProse(l.note)}</p>${l.link?`<p class="tip"><a href="${l.link}" target="_blank" rel="noopener noreferrer">C++ standard reference ↗</a></p>`:''}</div></details>`).join(''):'<div class="empty"><h3>No matching lessons.</h3><p>Try another search or choose all topics.</p></div>';
+ $('lecture-list').innerHTML=list.length?list.map(l=>`<details class="library-term lecture-lesson"><summary>${escape(l.title)}<span class="pill">${escape(l.topic)}</span></summary><div class="library-body"><p class="definition">${formatProse(l.summary)}</p>${renderLessonExamples(l)}<p class="lab-notice">${formatProse(l.note)}</p>${l.link?`<p class="tip"><a href="${l.link}" target="_blank" rel="noopener noreferrer">C++ standard reference ↗</a></p>`:''}</div></details>`).join(''):'<div class="empty"><h3>No matching lessons.</h3><p>Try another search or choose all topics.</p></div>';
+}
+
+function renderLessonExamples(lesson){
+ const sections=lesson.id==='deduction'
+  ? [{title:'One shared type',code:lesson.code.split('// Alternative: independent types')[0].trim(),steps:lesson.steps.slice(0,2)},
+     {title:'Two independent types',code:lesson.code.split('// Alternative: independent types')[1].trim(),steps:lesson.steps.slice(2,3)},
+     {title:'Supplying types explicitly',code:lesson.code.split('// Alternative: independent types')[1].trim()+"\n\nprintPair<int>('A', 3.14);\nprintPair<double, int>(2.5, 8.9);",steps:lesson.steps.slice(3)}]
+  : [{code:lesson.code,steps:lesson.steps}];
+ return sections.map(section=>`<section class="lesson-example">${section.title?`<h3 class="lesson-example-title">${escape(section.title)}</h3>`:''}<pre class="example">${escape(section.code)}</pre><ol class="lecture-steps">${section.steps.map(step=>`<li>${formatProse(step)}</li>`).join('')}</ol></section>`).join('');
 }

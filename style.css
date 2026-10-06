@@ -55,3 +55,11 @@ footer .creator-credit{display:inline;color:var(--ink);letter-spacing:0;font-siz
 .primary,.mode.active,.selected-tab{background:linear-gradient(115deg,#d7b4ff,#b4cfff);border-color:#bca3ed;color:#111}.primary:hover,.secondary.selected-tab:hover{background:linear-gradient(115deg,#e8d1ff,#cce8ff)}.known{background:var(--mint);border-color:var(--mint)}.known:hover{background:#c8f7d8}.stats>div:nth-child(1) strong{color:var(--cyan)}.stats>div:nth-child(2) strong{color:var(--mint)}.stats>div:nth-child(3) strong{color:var(--peach)}.stats>div:nth-child(4) strong{color:var(--violet)}.progress-track>div{background:linear-gradient(90deg,var(--violet),var(--cyan),var(--mint))}.card{border-top:2px solid #796295}.exam-stamp{background:linear-gradient(145deg,#2b2236,#172b32);border-color:#76608a}.tiny-star,.result-icon{color:var(--peach)}.question-hint summary,.lecture-photos>summary{color:var(--cyan)}.draft-label textarea{caret-color:var(--cyan);border-color:#645477}.changed-link{background:var(--cyan);color:#111}.creator-credit{color:var(--pink)!important}
 
 .inline-code{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;font-size:.92em;line-height:inherit;background:#24212b;border:1px solid #433a50;border-radius:4px;padding:.08em .28em;box-decoration-break:clone;-webkit-box-decoration-break:clone;white-space:normal;overflow-wrap:anywhere;font-weight:400}
+
+.intro-credit{margin:14px 0 0;font-size:14px;letter-spacing:.2px;line-height:1.6}
+
+.lesson-example-title{font-family:Manrope,Arial,sans-serif;font-size:17px;color:var(--cyan);margin:24px 0 12px}.lesson-example+.lesson-example{border-top:1px solid var(--line);margin-top:22px;padding-top:4px}
+
+.creator-row{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;margin-top:12px}.creator-row .intro-credit{margin:0}.instagram-link{display:inline-flex;align-items:center;gap:7px;min-height:44px;color:#e7b8ef;font-size:14px;text-decoration:none;border-radius:6px;padding:0 5px}.instagram-link:hover{color:#fff;text-decoration:underline;text-underline-offset:4px}.instagram-link svg{flex-shrink:0}
+
+.instagram-link{width:44px;justify-content:center;padding:0}.creator-row{column-gap:8px}
