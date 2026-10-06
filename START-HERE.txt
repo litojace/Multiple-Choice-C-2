@@ -1,0 +1,11 @@
+EXAM 2 STUDY STUDIO
+
+1. Extract/unzip this ZIP file.
+2. Open the extracted Exam-2-Study-Studio folder.
+3. Double-click index.html to open the website in Chrome, Edge, Firefox, or Safari.
+
+No terminal, Node.js, installation, or account is needed. Keep the included files together.
+
+Includes flashcards, terminology quizzes, 21 course quiz items, a searchable glossary, and coding/pseudocode practice. Coding is self-review, not automatic grading.
+
+Progress is saved in your browser when browser storage is available. For directly opened local files, persistence depends on your browser settings. Keep the folder in the same location and use the same browser. Google Fonts are optional; the site works with system fonts offline.

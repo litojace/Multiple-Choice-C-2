@@ -1,0 +1,62 @@
+(function(root) {
+const rows = [
+['Identifier','Foundations','A name used to identify a program entity, such as a variable, function, or class.','In int score = 10;, score is the identifier.','An identifier is a name; a literal is a value written directly in code.'],
+['Literal','Foundations','A value written directly in source code, such as 42, 3.5, or "hello".','42, 3.5, \'A\', and true are literals.','A variable can hold a value, but its name is not a literal.'],
+['Global constant','Foundations','A named value declared outside functions that cannot be changed through its const name.','const int CAP = 50; // at namespace scope','Global describes scope; const describes whether the named value can be modified.'],
+['Floating-point type','Foundations','A numeric type that represents values with fractional parts using finite precision.','float ratio = 0.5f; double average = 3.25;','float and double can have rounding error; they do not represent all real numbers exactly.'],
+['Type casting','Foundations','An explicit conversion of an expression from one type to another.','double ratio = static_cast<double>(count) / total;','Casting count before division avoids integer division when total is an integer.'],
+['Shorthand notation','Operators','Compound assignment that combines an operation and assignment, such as += or *=.','score += 5; // adds 5 to score','For a simple int variable, x += y has the effect of x = x + y.'],
+['Conditional operator','Operators','The ?: operator, which selects one of two expressions according to a condition.','int max = a > b ? a : b;','Only the selected second or third operand is evaluated.'],
+['Prefix operator','Operators','An operator written before its operand; prefix increment changes the value before yielding the result.','int x = 3; int y = ++x; // x = 4, y = 4','Prefix ++x yields the updated value. Compare it with postfix x++.'],
+['Postfix operator','Operators','An operator written after its operand; postfix increment yields the old value and increments the operand.','int x = 3; int y = x++; // x = 4, y = 3','The expression yields the old value; x still becomes 4.'],
+['Dereference operator','Operators','The unary * operator used to access the object a pointer points to.','int n = 7; int* p = &n; *p = 9; // n = 9','Dereference only a valid pointer to a live object, never nullptr or a dangling pointer.'],
+['new operator','Memory','An expression that allocates dynamic storage, constructs an object, and returns a pointer.','int* p = new int(7); delete p;','Use delete for new T and delete[] for new T[n]; allocation alone does not manage ownership.'],
+['Scope resolution operator','Operators','The :: operator used to qualify a name with its namespace or class, or select global scope.','std::cout; void DArray::deleteSecond() { /* ... */ }','The operator is ::; DArray is the class qualifier in DArray::deleteSecond.'],
+['Unary operator','Operators','An operator that operates on one operand.','!ready; -value; ++count; *ptr;','The unary * dereferences a pointer; the binary * multiplies two operands.'],
+['Binary operator','Operators','An operator that operates on two operands.','a + b; x == y; total * rate;','Binary means two operands, not two digits or two possible outcomes.'],
+['Ternary operator','Operators','An operator with three operands; C++ uses ?: as its conditional operator.','condition ? whenTrue : whenFalse','Conditional describes its behavior; ternary describes the number of operands.'],
+['Heap','Memory','A common implementation memory region used for dynamic allocation.','int* values = new int[10];','In introductory C++ usage, heap often refers to the storage used by new; this is not the heap data structure.'],
+['Free-store memory','Memory','Storage available for dynamic allocation with C++ new and released with delete.','DArray* p = new DArray; delete p;','Free store is a C++ allocation concept; implementations commonly use a heap for it.'],
+['Dynamic array','Memory','An array whose storage is allocated at runtime, with a chosen runtime length.','int* a = new int[n]; /* use a */ delete[] a;','A raw dynamically allocated array does not automatically resize. A wrapper can allocate a larger replacement.'],
+['Member function','Classes','A function declared as part of a class that defines an operation associated with that class.','class Box { public: int size() const; };','Non-static member functions operate on an object and can access its private members.'],
+['Non-member function','Functions','A function that is not a member of a class.','int square(int x) { return x * x; }','A non-member function does not have a this pointer; friend functions can be non-members.'],
+['Pointer','Memory','An object that stores an address or a null pointer value.','int n = 8; int* p = &n;','p holds an address; *p accesses the pointed-to object; &n obtains its address.'],
+['Node','Linked lists','An element of a linked structure containing data and one or more links to other nodes.','struct Node { int data; Node* prev; Node* next; };','A doubly linked list node normally has both next and previous links.'],
+['Automatic variable','Memory','A variable with automatic storage duration, typically a local variable that exists until its block exits.','void f() { int count = 0; }','A local pointer may be automatic while the object allocated with new has dynamic storage duration.'],
+['Dynamic variable','Memory','An object created in dynamically allocated storage whose lifetime is controlled by allocation and deallocation.','int* p = new int(5); // *p is the dynamic object','The pointer p and the dynamically allocated object it points to have different lifetimes.'],
+['Random access','Foundations','Access to an element by its position without visiting preceding elements.','int value = a[7];','Array indexing provides constant-time access; a linked list generally requires traversal.'],
+['Separate compilation','Functions','Compiling source files into object files independently, then linking them into a program.','g++ -c DArray.cpp; g++ -c main.cpp; g++ DArray.o main.o -o app','Headers share declarations; the linker connects definitions and uses across translation units.'],
+['Header file','Functions','A file commonly used to share declarations, types, and necessary inline or template definitions.','#include "DArray.h"','Headers are included into translation units. Include guards prevent repeated definitions within one translation unit.'],
+['Source code file','Functions','A file containing program source, commonly a .cpp translation unit with function definitions.','DArray.cpp contains definitions of DArray member functions.','A .cpp file is compiled after preprocessing its included headers.'],
+['Class qualifier','Classes','A class name followed by :: that identifies a member defined or referenced outside the class.','void DArray::deleteSecond() { /* ... */ }','DArray:: qualifies the member name; it tells the compiler which class owns it.'],
+['Constructor','Classes','A special member function that initializes an object when it is created.','DArray::DArray() : capacity(50), numOfElements(0) { }','A constructor uses the class name and has no return type.'],
+['Constructor member initializer list','Classes','The list after a constructor signature and colon that initializes members or base classes before the body runs.','Box::Box(int n) : size(n), data(new int[n]) { }','Members initialize in declaration order, not the order written in the list. This is different from std::initializer_list.'],
+['Passing by reference','Functions','Binding a parameter to the caller’s object so the function uses that same object.','void increment(int& n) { ++n; }','A non-const reference permits modification; a const reference permits reading without copying.'],
+['Passing by value','Functions','Initializing a parameter as a separate value from the argument.','void f(int n) { n = 0; } // caller’s int is unchanged','A pointer passed by value copies the address; modifying the pointed-to object can still affect the caller.'],
+['const modifier on a member function','Classes','A trailing const that prevents a member function from modifying non-mutable members through this.','bool search(int value) const;','Const member functions can be called on const objects. A top-level const return value means something different.'],
+['const modifier on a parameter','Functions','A qualifier that restricts modification, with its meaning determined by whether it qualifies a value, reference, pointer, or pointee.','void read(const DArray& a); // cannot modify a through this reference','const int* p protects the pointee; int* const p protects the pointer. A const value parameter protects only its local copy.'],
+['Data abstraction','Classes','Presenting a type through its useful operations while leaving implementation details behind the interface.','A DArray user calls addElement() without implementing storage management.','Abstraction focuses on what a type does and what its operations mean.'],
+['Information hiding','Classes','Restricting access to implementation details so clients depend on an interface.','private: int* a; int numOfElements;','Private members help keep clients from directly changing internal representation.'],
+['Encapsulation','Classes','Grouping data and operations into a type with a controlled interface.','class DArray groups array storage with functions that operate on it.','Encapsulation packages state and behavior; information hiding restricts access to details.'],
+['Instance of a class','Classes','An individual object of a class type with its own state.','DArray first; DArray second; // two instances','The class defines the type; each instance is an object of that type.'],
+['Destructor','Classes','A special member function called when an object’s lifetime ends, commonly to release owned resources.','DArray::~DArray() { delete[] a; }','Its name starts with ~ and it has no return type or parameters.'],
+['Prototype','Functions','A function declaration that specifies its name, return type, and parameter types without a body.','int square(int value);','A prototype lets the compiler check calls before seeing the function definition.'],
+['Argument','Functions','An expression supplied in a function call to initialize or bind a parameter.','square(5); // 5 is the argument','The argument is supplied at the call site; the parameter is declared in the function.'],
+['Doubly linked list','Linked lists','A linked sequence in which nodes have links to both the next and previous node.','p = p->next; p = p->prev;','Updating a link may require repairing the matching link in the neighboring node.'],
+['DArray size vs. capacity','DArray','Size counts the elements currently stored; capacity counts the allocated slots available.','With capacity = 50 and numOfElements = 3, size is 3.','Deleting an element reduces logical size but need not reduce allocated capacity.'],
+['Function template','Templates','A pattern used by the compiler to generate functions for suitable types.','template <typename T> T twice(T x) { return x + x; }','The operations in the template must be valid for the type used to instantiate it.'],
+['Class template','Templates','A pattern used to generate class types parameterized by types or other template arguments.','template <typename T> class Box { T value; };','Box<int> and Box<double> are different class types instantiated from the same template.']
+];
+const terms = rows.map((r,i)=>({id:'term-'+i,term:r[0],category:r[1],definition:r[2],example:r[3],tip:r[4],source:i<42?'Terminology list':'Extra topic practice'}));
+function shuffle(items, random=Math.random) { const a=[...items]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function choicesFor(term, random=Math.random) {
+  // Equivalent vocabulary is not used as a distractor for its synonym.
+  const ambiguous = [['Conditional operator','Ternary operator'],['Heap','Free-store memory']];
+  const eligible = terms.filter(t=>t.id!==term.id && !ambiguous.some(pair=>pair.includes(t.term)&&pair.includes(term.term)));
+  const nearby=shuffle(eligible.filter(t=>t.category===term.category),random);
+  const other=shuffle(eligible.filter(t=>t.category!==term.category),random);
+  return shuffle([term,...[...nearby,...other].slice(0,3)],random);
+}
+if(typeof module!=='undefined') module.exports={terms,shuffle,choicesFor};
+else root.StudyData={terms,shuffle,choicesFor};
+})(typeof window!=='undefined'?window:globalThis);
