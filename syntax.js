@@ -18,7 +18,21 @@ function highlightCode(source){
   return kind?`<span class="syntax-${kind}">${escapeText(token)}</span>`:escapeText(token);
  }).join('');
 }
-if(typeof module!=='undefined')module.exports={highlightCode};else{
+
+// Recognize inline C++ notation while leaving surrounding prose in the body font.
+function formatProse(source){
+ const pattern=/\btemplate\s*<[^>\n]+>|\b(?:T\d*|int|double|char|bool|void|size_t|const)\s*(?:&|\*)?\s+[a-zA-Z_]\w*\s*\([^()\n]*\)|\b[a-zA-Z_]\w*(?:\s*<[^<>\n]+>)?\s*\([^()\n]*\)(?:(?:->|\.)[a-zA-Z_]\w*\s*(?:\([^()\n]*\))?)*|\b[a-zA-Z_]\w*(?:(?:->|::|\.)[a-zA-Z_]\w*|\[[^\]\n]+\])+(?:\s*\([^()\n]*\))?|\bT\d*\s*=\s*(?:int|double|char|bool)|\b(?:std::)?(?:vector|string)\s*<[^<>\n]+>|\b(?:T\d*|int|double|char|bool|void|size_t|nullptr|const|paramlist|paramList|otherArray|numOfElements|numOfElem|memberVar|secondToLast|newNode|tempPtr|val1|val2|idx|p[1-4]|TArray)\b(?:\s*[&*])?|\b(?:DArray|DoublyList|DLLNode|Node|MyClass|Pair|Box|TestTemp|TemplateClass)(?:<[^<>\n]+>)?\b|\b[a-zA-Z_]\w*\.(?:cpp|h|tpp)\b/g;
+ let result='',cursor=0;
+ for(const match of String(source).matchAll(pattern)){
+  result+=escapeText(String(source).slice(cursor,match.index));
+  result+='<code class="inline-code">'+highlightCode(match[0])+'</code>';
+  cursor=match.index+match[0].length;
+ }
+ return result+escapeText(String(source).slice(cursor));
+}
+
+if(typeof module!=='undefined')module.exports={highlightCode,formatProse};else{
+ root.formatProse=formatProse;
  root.highlightCode=highlightCode;
  const content=document.getElementById('content');
  function paint(){
