@@ -9,3 +9,12 @@ No terminal, Node.js, installation, or account is needed. Keep the included file
 Includes flashcards, terminology quizzes, 21 course quiz items, a searchable glossary, and coding/pseudocode practice. Coding is self-review, not automatic grading.
 
 Progress is saved in your browser when browser storage is available. For directly opened local files, persistence depends on your browser settings. Keep the folder in the same location and use the same browser. Google Fonts are optional; the site works with system fonts offline.
+
+LECTURE PHOTOS
+Open Lecture notes for 11 organized lessons built from 29 photos.
+Use the topic filter or search, then expand a lesson for steps, readable code,
+clarifications, and its original photos. The practice button opens 20 new
+questions; Course quizzes now contains 41 questions in total.
+
+For publishing, include lecture-data.js, lecture.js, and the entire photos
+folder along with the existing website files. Keep photos filenames intact.

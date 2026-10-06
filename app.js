@@ -36,9 +36,9 @@ function filtered() {
     ($('scope').value==='all' || ($('scope').value==='review' ? progress.review.includes(t.id) : t.source==='Terminology list')));
 }
 function buildDeck() {
-  if(mode==='lab') {render();return;}
+  if(mode==='lab'||mode==='lecture') {render();return;}
   if(mode==='practice') {
-    deck = shuffle(questions.filter(q => ($('chapter').value==='all' || q.chapter===$('chapter').value) && ($('practice-scope').value==='all' || progress.practiceReview.includes(q.id))));
+    deck = shuffle(questions.filter(q => ($('chapter').value==='all' || ($('chapter').value==='lecture' ? q.id.startsWith('slides-') : q.chapter===$('chapter').value)) && ($('practice-scope').value==='all' || progress.practiceReview.includes(q.id))));
     index=0; revealed=false; quiz=deck; answers=[]; selected=null; options=quiz.length?practiceOptions(quiz[0]):[]; render(); return;
   }
   deck = shuffle(filtered()); index=0; revealed=false;
@@ -48,10 +48,10 @@ function buildDeck() {
 function setMode(next) {
   mode=next;
   document.querySelectorAll('.mode').forEach(b => { b.classList.toggle('active',b.dataset.mode===mode); b.setAttribute('aria-pressed',b.dataset.mode===mode); });
-  const headings = {cards:['ACTIVE RECALL','A term at a time.'],quiz:['CHECK YOUR UNDERSTANDING','Make it click.'],glossary:['YOUR REFERENCE SHELF','Find the right words.'],practice:['FROM YOUR COURSE QUIZZES','Read. Trace. Understand.'],lab:['FROM YOUR SAMPLE EXERCISES','Think it through. Write it out.']};
+  const headings = {lecture:['FROM YOUR CLASS SLIDES','Make sense of the lecture.'],cards:['ACTIVE RECALL','A term at a time.'],quiz:['CHECK YOUR UNDERSTANDING','Make it click.'],glossary:['YOUR REFERENCE SHELF','Find the right words.'],practice:['FROM YOUR COURSE QUIZZES','Read. Trace. Understand.'],lab:['FROM YOUR SAMPLE EXERCISES','Think it through. Write it out.']};
   $('mode-eyebrow').textContent=headings[mode][0]; $('mode-title').textContent=headings[mode][1];
   $('session-tag').textContent=mode==='practice'?'EXPLAINED PRACTICE':mode==='quiz'?'UP TO 10 QUESTIONS':'UNTIMED PRACTICE';
-  $('term-filters').hidden=mode==='practice'||mode==='lab';
+  $('term-filters').hidden=mode==='practice'||mode==='lab'||mode==='lecture';
   $('practice-filters').hidden=mode!=='practice';
   $('shuffle').hidden=mode==='glossary'||mode==='lab';
   buildDeck();
@@ -61,6 +61,7 @@ function detail(t) {
 }
 function render() {
   stats();
+  if(mode==='lecture') {renderLectureNotes();return;}
   if(mode==='lab') {renderExercises();return;}
   if(mode==='glossary') { renderLibrary(); return; }
   if(!deck.length && mode==='practice') {
