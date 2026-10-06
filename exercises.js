@@ -1,7 +1,7 @@
 (function(root){
 'use strict';
 const coding={
- id:'swap-values',title:'Swap values without creating pointers',source:'ch2 sample coding question.pdf',
+ id:'swap-values',title:'Swap values without creating pointers',source:'Coding practice',
  signature:'void DoublyList::swapFirstCallingSecondParam(DoublyList& paramlist)',
  prompt:'Write the missing function body. Swap two DATA VALUES: the first value in this list (the object calling the function) and the second value in paramlist.\n\nRules: If either list has fewer than two nodes, do nothing. Create no pointer variables and change no links. Node data is int. The class has first, last, and count members. Nodes provide getData(), setData(), and getNext().',
  solution:`if (count > 1 && paramlist.count > 1)
@@ -19,7 +19,7 @@ const coding={
  'I create no pointer variables and change no next or prev links.',
  'I use braces, consistent indentation, a descriptive parameter name, and spaces around logical/comparison/assignment operators.'
  ],
- note:'The handout’s bullet about updating a last node’s next pointer does not apply to this value-only swap. Keep all links, node identities, and list counts unchanged. The code below follows the actual question and its supplied solution. Course-specific formatting still needs comparison with your full style guide.',
+ note:'Keep all links, node identities, and list counts unchanged. This operation swaps data values only.',
  examples:[{calling:[1,2,3],parameter:[10,20,30]},{calling:[70,45,32,78,51,67,23,56],parameter:[9,5,3,8,6,1,4]},{calling:[1],parameter:[10,20]},{calling:[1,2],parameter:[]}]
 };
 const steps=[
@@ -34,7 +34,7 @@ const steps=[
  {text:'Line 8: move the calling list’s first pointer to Node9.',code:'first = paramlist.last;'},
  {text:'Line 9: move the parameter list’s last pointer to Node1.',code:'paramlist.last = current;'}
 ];
-const pseudocode={id:'swap-nodes',title:'Complete a swap of two nodes',source:'ch2 sample pseudocode question.pdf',
+const pseudocode={id:'swap-nodes',title:'Complete a swap of two nodes',source:'Coding practice',
  prompt:'Choose the two missing statements to swap whole NODES: the first node of this list and the last node of paramlist. Rearrange links; do not swap data values.\n\nAssume two separate lists, each with at least three nodes. Node numbers identify the original nodes by their values. Follow the lines in order and track each changed link.',
  signature:'void DoublyList::swapFirstCallingLastParameter(DoublyList& paramlist)',
  lines:steps.slice(1).map((s,i)=>i===2||i===6?`Line ${i+1}: [choose the missing statement]`:s.text),

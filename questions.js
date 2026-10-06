@@ -27,7 +27,7 @@ const passPrompts = {
 const questions = [];
 function add(id, chapter, sourceQuestion, category, prompt, options, answer, explanation, code='', codeChoices=false, relatedTerms=[]) {
   questions.push({id,chapter,sourceQuestion,category,prompt,options,answer,explanation,code,codeChoices,relatedTerms,
-    source: chapter==='2'?'Ch2 quiz.pdf · Quiz 2, chapter 2':'Ch1 quiz.pdf · Quiz 3, chapters 3–4'});
+    source: chapter==='2'?'Linked lists':'Arrays and templates'});
 }
 add('dll-1','2','1','Linked lists',
 'replaceValue() will change the last node’s data to 999.\nWhich declaration should you write INSIDE class DoublyList?',
